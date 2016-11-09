@@ -11,7 +11,7 @@
         <?php
         
         $counter_name = "counter.txt";
-        // Check if a text file exists. If not create one and initialize it to zero.
+        // Check if a text file exists. If not, create one and initialize it to zero.
         if (!file_exists($counter_name)) {
             $f = fopen($counter_name, "w");
             fwrite($f,"0");
@@ -55,7 +55,7 @@
                 $query = "SELECT o.itemName, b.price, m.username, b.memberEmail, a.auctionID, o.productID
                             FROM bid b, member m, object o, auction a
                             WHERE b.memberEmail = m.email AND b.auctionID = a.auctionID
-                            AND a.owner = o.owner AND o.owner = '".$user."' AND a.objectID = o.productID AND o.availability = 'TRUE'
+                            AND a.owner = o.owner AND o.owner = '".$user."' AND o.owner != b.memberEmail AND a.objectID = o.productID AND o.availability = 'TRUE'
                             ORDER BY o.itemName ASC, b.price DESC;
                             ";
 
@@ -67,7 +67,7 @@
 
                 </li></div>";
 
-                echo "<div id=\"id".$row[5]."\" class=\"modal\">
+                echo "<div id=\"id".$row[5]."\">
                     <div><a href=\"#\" title=\"Close\" class=\"close\">X</a>
                     ".$row[1].": &nbsp;".$row[2]." <br><br> <b>Bidder information:</b><br>Bidder name: ".$row[2]."<br> Bidder e-mail: ".$row[3]."<br>
                     
@@ -77,13 +77,12 @@
                         <input id=\"owner\" name=\"owner\" type=\"hidden\" value=\"".$user."\"></input>
                         <input id=\"borrower\" name=\"borrower\" type=\"hidden\" value=\"".$row[3]."\"></input>
                         <input id=\"borrower\" name=\"productID\" type=\"hidden\" value=\"".$row[5]."\"></input>
-                        <input type=\"submit\" name=\"acceptBid\" type=\"hidden\" value=\"Accept this bid!\">
+                        <input type=\"submit\" name=\"acceptBid\"  value=\"Accept this bid!\">
                     </form>
                     </div>
                 </div>";
             }
             
-                echo "<br>$counterVal<br>";
             if(isset($_GET['acceptBid'])){
                 echo "<p></p><p>auction ID : ".$_GET['auctionID']." is now finished! With the winner ".$_GET['borrower']." and at a price of ".$_GET['bidPrice'].".</p>";
                 
@@ -92,15 +91,16 @@
                 
                 
                 $date = date('Y-m-d', time());
+                
+                /*
                 echo "$date";
                 echo "<br>$date+30<br>";
                 
                 echo "<br>".$_GET['owner']."<br>";
                 echo "<br>".$_GET['borrower']."<br>";
                 echo "<br>".$_GET['productID']."<br>";
-                echo "<br>$date<br>";
+                echo "<br>$date<br>";*/
                 
-                echo "<br>You are visitor number $counterVal to this site<br>";
                 
                 $Query = "INSERT INTO loan values('".$counterVal."', '".$date."', '2017-11-11', '".$_GET['owner']."', '".$_GET['borrower']."','".$_GET['productID']."');
                 UPDATE object	
@@ -112,6 +112,8 @@
                 
 
                 $Result = pg_query($Query) or die('query failed: '. pg_last_error());
+                
+                //header('Location: '.$_SERVER['PHP_SELF']);  
                 /*if(!$Result){
                     echo "we failed";
                 } else {
@@ -125,7 +127,7 @@
 
         </div>
         
-        <div class="sect4">
+        <div class="sect4" style="display: none;">
             List of Loans:<br>
             <?php $query = 'SELECT * FROM loan';
 
@@ -135,7 +137,7 @@
             }
             ?>
             
-        <div class="sect5">
+        <div class="sect5" style="display: none;">
             List of Bids:<br>
             <?php $query = 'SELECT * FROM bid';
 
@@ -147,7 +149,7 @@
 
         </div>
         
-        <div class="sect5">
+        <div class="sect5" style="display: none;">
             List of auctions with a winner:<br>
             <?php $query = 'SELECT * FROM auction WHERE winner IS NOT NULL';
 
