@@ -77,7 +77,7 @@
                         <input id=\"owner\" name=\"owner\" type=\"hidden\" value=\"".$user."\"></input>
                         <input id=\"borrower\" name=\"borrower\" type=\"hidden\" value=\"".$row[3]."\"></input>
                         <input id=\"borrower\" name=\"productID\" type=\"hidden\" value=\"".$row[5]."\"></input>
-                        <input type=\"submit\" name=\"acceptBid\" type=\"hidden\" value=\"Accept this bid!\">
+                        <input type=\"submit\" name=\"acceptBid\"  value=\"Accept this bid!\">
                     </form>
                     </div>
                 </div>";
@@ -125,9 +125,9 @@
 
         </div>
         
-        <div class="sect4">
+        <!--div class="sect4">
             List of Loans:<br>
-            <?php $query = 'SELECT * FROM loan';
+            <!?php $query = 'SELECT * FROM loan';
 
             $result = pg_query($query) or die ('Query failed fml '. pg_last_error());
             while($row = pg_fetch_row($result)){
@@ -137,7 +137,7 @@
             
         <div class="sect5">
             List of Bids:<br>
-            <?php $query = 'SELECT * FROM bid';
+            <!?php $query = 'SELECT * FROM bid';
 
             $result = pg_query($query) or die ('Query failed fml '. pg_last_error());
             while($row = pg_fetch_row($result)){
@@ -149,7 +149,7 @@
         
         <div class="sect5">
             List of auctions with a winner:<br>
-            <?php $query = 'SELECT * FROM auction WHERE winner IS NOT NULL';
+            <!?php $query = 'SELECT * FROM auction WHERE winner IS NOT NULL';
 
             $result = pg_query($query) or die ('Query failed fml '. pg_last_error());
             while($row = pg_fetch_row($result)){
@@ -157,8 +157,7 @@
             }
             ?>    
 
-        </div>    
-*/
+        </div-->    
         <script src="./jquery-2.1.3.min/index.js"></script>
 
     </body>

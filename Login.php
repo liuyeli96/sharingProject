@@ -27,25 +27,19 @@
     }
     ?>
 
-<!--
+
 <form>
+    <div style="margin-left:10px">
 
 	<label style="color:#2D2D2D; width:250px; display: block"><span style="position:relative;">Email: </span><input style="float:right; display:inline" type="text" name="Email" id="Email"></label> <br>
 
-    <label style="color:#2D2D2D; width:250px; display: block"><span style="position:relative;">Password: </span><input style="float:right; display:inline" type="text" name="Password" id="Password"></label> <br>
+    <label style="color:#2D2D2D; width:250px; display: block"><span style="position:relative;">Password: </span><input style="float:right; display:inline" type="password" name="Password" id="Password"></label> <br>
 
     <input type="submit" name="formSubmit" value="Login" >
+    </div>
 
 </form>
--->
-<form>
-    <div class="sect2">
-     <input type="text" name="Email" placeholder="Email" style="margin-top:5px"> <br>
-     <input type="password" name="Password" placeholder="Password" style="margin-top:5px"> <br>
- </div>
 
- <input type="submit" name="formSubmit" value="Login" >
-</form>
 
 <?php
 

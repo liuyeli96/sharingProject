@@ -1,8 +1,17 @@
 .sect1 {
     text-align: center;
+    background-color:#6666C1;
+    color:#FFF8DC;
 }
 .sect2 {
-
+    text-align: center;
+}
+.sect2 a{
+    text-decoration:none;
+    color: #FF00FF;
+}
+.sect2 div{
+    border-bottom-color:#FFFFFF;
 }
 .sect2 input[type=text]{
     height:30px;
@@ -28,7 +37,6 @@
 .sect3 div{
     /*border-color:#000000;
     border-style:solid none;*/
-
 
 }
 .sect3 li a{
@@ -90,3 +98,11 @@ body {
 }
 
 .close:hover { background: #00d9ff; }
+
+.copyright {
+    background-color:#6666C1;
+    color:#FFF8DC;
+    text-align:center;
+    margin-top: 10px;
+    padding: 10px
+}

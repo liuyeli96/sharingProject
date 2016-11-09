@@ -14,30 +14,22 @@
     $dbconn = pg_connect("host=localhost port=5432 dbname=Sharing user=postgres password=10220911")
     or die('Could not connect: ' . pg_last_error());
     ?>
-    <!--
 
-    <div style="width:300px">
+    <form>
+      <div style="width:300px; margin-left: 10px">
 
-     <label style="color:#2D2D2D; width:250px; display: block"><span style="position:relative;">Username:</span><input style="float:right; display:inline" type="text" name="Username" id="Username"></label><br>
+       <label style="color:#2D2D2D; width:250px; display: block"><span style="position:relative;">Username:</span><input style="float:right; display:inline" type="text" name="Username" id="Username"></label><br>
 
-     <label style="color:#2D2D2D; width:250px; display: block"><span style="position:relative;">Email: </span><input style="float:right; display:inline" type="text" name="Email" id="Email"></label> <br>
+       <label style="color:#2D2D2D; width:250px; display: block"><span style="position:relative;">Email: </span><input style="float:right; display:inline" type="text" name="Email" id="Email"></label> <br>
 
-     <label style="color:#2D2D2D; width:250px; display: block"><span style="position:relative;">Password: </span><input style="float:right; display:inline" type="password" name="Password" id="Password"></label> <br>
+       <label style="color:#2D2D2D; width:250px; display: block"><span style="position:relative;">Password: </span><input style="float:right; display:inline" type="password" name="Password" id="Password"></label> <br>
 
-     <label style="color:#2D2D2D; width:250px; display: block"><span style="position:relative;">Location: </span><input style="float:right; display:inline" type="text" name="Location" id="Location"> </label><br>
+       <label style="color:#2D2D2D; width:250px; display: block"><span style="position:relative;">Location: </span><input style="float:right; display:inline" type="text" name="Location" id="Location"> </label><br>
 
-   -->
-   <form>
-     <div class="sect2">
-       <input type="text" name="Username" placeholder="Username" style="margin-top:5px"> <br>
-       <input type="text" name="Email" placeholder="Email" style="margin-top:5px"> <br>
-       <input type="password" name="Password" placeholder="Password" style="margin-top:5px"> <br>
-       <input type="text" name="Location" placeholder="Location" style="margin-top:5px"> <br>
+
+       <input type="submit" name="formSubmit" value="Create Account" >
+       <input type="button" value="Login Now!" onClick="document.location.href='Login.php'"/>
      </div>
-
-
-     <input type="submit" name="formSubmit" value="Create Account" >
-     <input type="button" value="Login Now!" onClick="document.location.href='Login.php'"/>
    </form>
 
 

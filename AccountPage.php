@@ -26,6 +26,8 @@
 
 	<form>
 		<select name="View">
+			<option value="browsing">Browse Items</option>
+			<option value="bid">Bids for my Items</option>
 			<option value="history">Loan History</option>
 			<option value="add">Add Item</option>
 			<option value="sale">My Items</option>
@@ -42,6 +44,10 @@
 			header("Location: /StuffSharingObject.php");
 		}else if($result=='sale'){
 			header("Location: /UserItems.php");
+		}else if($result=='browsing'){
+			header("Location: /browsing.php");
+		}else if($result=='bid'){
+			header("Location: /AcceptBids.php");
 		}
 	}
 	?>

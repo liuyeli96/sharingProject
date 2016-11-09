@@ -5,13 +5,42 @@
         <title>Sharing Project</title>
         <link href="styles.css" media="all" rel="Stylesheet" type="text/css"/>
 
+        <script>
+        function showResult(str) {
+          if (str.length==0) {
+            document.getElementById("searchbar").innerHTML="";
+            document.getElementById("searchbar").style.border="0px";
+            return;
+          }
+          if (window.XMLHttpRequest) {
+            // code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp=new XMLHttpRequest();
+          } else {  // code for IE6, IE5
+            xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+          }
+          xmlhttp.onreadystatechange=function() {
+            if (this.readyState==4 && this.status==200) {
+              document.getElementById("searchbar").innerHTML=this.responseText;
+              document.getElementById("searchbar").style.border="1px solid #A5ACB2";
+            }
+          }
+          xmlhttp.open("GET","search.php?q="+str,true);
+          xmlhttp.send();
+        }
+        </script>
     </head>
     <body>
 
         <?php
         $dbconn = pg_connect("host=localhost port=5432 dbname=Sharing user=postgres password=12345678")
             or die('Could not connect: ' . pg_last_error());
-        $currObjectID = 20;
+        //$currObjectID = 20;
+              session_start();
+      $user = $_SESSION['user'];
+       if ( isset($_SESSION['user'])=="" ) {
+            header("Location: FirstPage.php");
+            exit;
+        }
         ?>
 
         <div class="sect1">
@@ -20,9 +49,12 @@
 
 
         <div class="sect2">
-            <a href="StuffSharingObject.php"><button type="button">Add Item</button></a><br>
+            <a href="stuffSharingObject.php"><button type="button">Add Item</button></a><br>
+            <form>
+                <input type="text" name="searchbar" placeholder="What do you want?" onkeyup="showResult(this.value)"/>
+                <div id="searchbar"></div>
+            </form>
 
-            <input type="text" name="searchbar" placeholder="What do you want?"/>
             <!--search bar and other crap included here -->
         </div>
 
@@ -31,14 +63,18 @@
             <ul>
 
 
-            <?php $query = 'SELECT o.category, o.itemname, o.description, o.price, o.owner, a.auctionid, b.price
-            FROM object o, auction a, bid b
-            WHERE a.objectid = o.productid AND b.auctionid = a.auctionid AND a.objectid = o.productid
-            AND b.price >=ALL (SELECT bi.price from bid bi WHERE bi.auctionid = a.auctionid)
-            UNION
-            SELECT o.category, o.itemname, o.description, o.price, o.owner, a.auctionid, b.price
-            FROM object o, auction a, bid b
-            WHERE a.objectid = o.productid AND b.auctionid = a.auctionid AND a.objectid = o.productid';
+            <?php $query = 'SELECT distinct o.category, o.itemname, o.description, o.price, o.owner, a.auctionid
+            from object o, auction a where o.availability=TRUE and a.objectid = o.productid';
+
+
+            //'SELECT distinct o.category, o.itemname, o.description, o.price, o.owner, a.auctionid, b.price
+            //FROM object o, auction a, bid b group by o.itemname';
+            // -- WHERE a.objectid = o.productid AND b.auctionid = a.auctionid AND a.objectid = o.productid
+            // -- AND b.price >=ALL (SELECT bi.price from bid bi WHERE bi.auctionid = a.auctionid)
+            // -- UNION
+            // -- SELECT o.category, o.itemname, o.description, o.price, o.owner, a.auctionid, b.price
+            // -- FROM object o, auction a, bid b
+            // -- WHERE a.objectid = o.productid AND b.auctionid = a.auctionid AND a.objectid = o.productid';
 
 //this needs to be changed in order to show the maximum bid price at the moment instead of just price.
             $result = pg_query($query) or die('Query failed: ' . pg_last_error());
@@ -62,15 +98,15 @@
 
             }
             if(isset($_GET['bidSubmit'])){
-                echo "auction ID : ".$_GET['auctionID']."";
+                //echo "auction ID : ".$_GET['auctionID']."";
 
-                $insertQuery = "INSERT INTO bid values('".$_GET['bidPrice']."', 'mchen@gmail.com', '".$_GET['auctionID']."');";
+                $insertQuery = "INSERT INTO bid values('".$_GET['bidPrice']."', '".$_SESSION['user']."', '".$_GET['auctionID']."');";
 
                 $insertResult = pg_query($insertQuery) or die('query fucked up: '. pg_last_error());
                 if(!insertResult){
                     echo "we dun fucked up";
                 } else {
-                    header("Location:welcome.php");
+                    header("Location:browsing.php");
                     exit;
                 }
             }
@@ -91,10 +127,12 @@
 
         </div>
 
+          <a href="AccountPage.php"><button>Go to Account Page</button></a><br>
+
+
         <div class="copyright">
             Copyright &#169; VYMMS
         </div>
-
 
 
         <script src="./jquery-2.1.3.min/index.js"></script>
